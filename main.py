@@ -24,3 +24,8 @@ def date_valide(jour, mois, annee):
     elif jour > nb_jour_mois(mois, annee) or jour<1:
         return False
     return True
+
+def chaine_date(jour, mois, annee):
+    liste_mois = ['Janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre'] 
+
+    return ('1er' if jour == 1 else str(jour)) +' '+ liste_mois[mois-1] +' '+ str(annee)
