@@ -52,10 +52,28 @@ def nb_jour_debut_annee(jour, mois, annee):
 
     return nb_jour - 1
 
-def nb_jour_entre_dates(jour1, mois1, annee1, jour2, mois2 ,annee2):
+def nb_jour_annee_entiere(annee1,annee2):
     nb_jour_annee_entiere = 0
 
-    for i in range(annee1+1,annee2):
-        nb_jour_annee_entiere = nb_jour_annee(i)
+    for annee in range(annee1+1,annee2):
+        nb_jour_annee_entiere += nb_jour_annee(annee)
 
-    return nb_jour_fin_annee(jour1, mois1, annee1) + nb_jour_annee_entiere + nb_jour_debut_annee(jour2, mois2, annee2)
+    return nb_jour_annee_entiere
+
+def nb_jour_entre_dates(jour1, mois1, annee1, jour2, mois2 ,annee2):
+    date_anterieure = False
+
+    if annee1 < annee2:
+        date_anterieure = True
+    elif annee1 == annee2 and mois1 < mois2:
+        date_anterieure = True
+    elif annee1 == annee2 and mois1 == mois2 and jour1 < jour2:
+        date_anterieure = True
+
+    if date_anterieure:
+        return nb_jour_fin_annee(jour1, mois1, annee1) + nb_jour_annee_entiere(annee1,annee2) + nb_jour_debut_annee(jour2, mois2, annee2)
+    elif date_anterieure is False:
+        return -(nb_jour_fin_annee(jour2, mois2 ,annee2) + nb_jour_annee_entiere(annee2,annee1) + nb_jour_debut_annee(jour1, mois1, annee1))
+    
+print(nb_jour_entre_dates(12, 1, 2009, 25, 11, 2006))
+print(nb_jour_entre_dates(25, 11, 2006, 12, 1, 2009))
