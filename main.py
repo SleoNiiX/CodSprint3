@@ -107,13 +107,14 @@ def nb_jour_entre_dates(jour1, mois1, annee1, jour2, mois2 ,annee2):
         else:
             nb_jour_entre_dates = -(nb_jour_fin_annee(jour2, mois2 ,annee2) + nb_jour_annee_entiere(annee2,annee1) + nb_jour_debut_annee(jour1, mois1, annee1))
     
-    if (date_anterieure(jour1, mois1, annee1, 15, 10 ,1582) and date_anterieure(15, 10 ,1582, jour2, mois2, annee2)) or (date_anterieure(jour2, mois2, annee2, 15, 10 ,1582) and date_anterieure(15, 10 ,1582, jour1, mois1, annee1)):
+    if date_anterieure(jour1, mois1, annee1, 15, 10 ,1582) and date_anterieure(15, 10 ,1582, jour2, mois2, annee2):
         return nb_jour_entre_dates - 10
+    elif date_anterieure(jour2, mois2, annee2, 15, 10 ,1582) and date_anterieure(15, 10 ,1582, jour1, mois1, annee1): 
+        return nb_jour_entre_dates + 10
     return nb_jour_entre_dates
 
 
 
-#print(nb_jour_entre_dates(4, 10, 1580, 16, 10 ,1582))
 Ouverture_menu = True
 
 while Ouverture_menu:
