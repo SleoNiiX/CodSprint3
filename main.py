@@ -3,6 +3,8 @@ import datetime
 
 
 def annee_bissextile(annee):
+    if date_anterieure(1, 1, annee, 15, 10 ,1582):
+        return annee % 4 == 0
     return annee%400 == 0 or (annee%4 == 0 and annee%100 != 0)
 
 def nb_jour_mois(mois, annee):
@@ -26,6 +28,8 @@ def date_valide(jour, mois, annee):
     if mois<1 or mois>12:
         return False
     elif jour > nb_jour_mois(mois, annee) or jour<1:
+        return False
+    elif mois == 10 and annee == 1582 and jour>=5 and jour<=14:
         return False
     return True
 
@@ -72,33 +76,44 @@ def nb_jour_mois_entier(mois1, mois2,annee):
 
     return nb_jour_mois_entier
 
-def nb_jour_entre_dates(jour1, mois1, annee1, jour2, mois2 ,annee2):
-    date_anterieure = False
-
+def date_anterieure(jour1, mois1, annee1, jour2, mois2 ,annee2):
     if annee1 < annee2:
-        date_anterieure = True
+        return True
     elif annee1 == annee2 and mois1 < mois2:
-        date_anterieure = True
+        return True
     elif annee1 == annee2 and mois1 == mois2 and jour1 < jour2:
-        date_anterieure = True
+        return True
+    return False
 
-    if date_anterieure:
+def nb_jour_entre_dates(jour1, mois1, annee1, jour2, mois2 ,annee2):
+    nb_jour_entre_dates = 0
+    
+    if date_anterieure(jour1, mois1, annee1, jour2, mois2 ,annee2):
         if annee1 == annee2:
             if annee1 == annee2 and mois1 == mois2:
-                return jour2 - jour1
-            return nb_jour_mois(mois1, annee1) - jour1 + nb_jour_mois_entier(mois1, mois2, annee1) + jour2
-        
-        return nb_jour_fin_annee(jour1, mois1, annee1) + nb_jour_annee_entiere(annee1,annee2) + nb_jour_debut_annee(jour2, mois2, annee2)
+                nb_jour_entre_dates = jour2 - jour1
+            else:
+                nb_jour_entre_dates = nb_jour_mois(mois1, annee1) - jour1 + nb_jour_mois_entier(mois1, mois2, annee1) + jour2
+        else:
+            nb_jour_entre_dates = nb_jour_fin_annee(jour1, mois1, annee1) + nb_jour_annee_entiere(annee1,annee2) + nb_jour_debut_annee(jour2, mois2, annee2)
     
-    elif date_anterieure is False:
+    elif date_anterieure(jour1, mois1, annee1, jour2, mois2 ,annee2) is False:
         if annee1 == annee2:
             if annee1 == annee2 and mois1 == mois2:
-                return jour2 - jour1
-            return -(nb_jour_mois(mois2, annee2) - jour2 + nb_jour_mois_entier(mois2, mois1, annee2) + jour1)
+                nb_jour_entre_dates = jour2 - jour1
+            else:
+                nb_jour_entre_dates = -(nb_jour_mois(mois2, annee2) - jour2 + nb_jour_mois_entier(mois2, mois1, annee2) + jour1)
     
-        return -(nb_jour_fin_annee(jour2, mois2 ,annee2) + nb_jour_annee_entiere(annee2,annee1) + nb_jour_debut_annee(jour1, mois1, annee1))
+        else:
+            nb_jour_entre_dates = -(nb_jour_fin_annee(jour2, mois2 ,annee2) + nb_jour_annee_entiere(annee2,annee1) + nb_jour_debut_annee(jour1, mois1, annee1))
     
-#print(nb_jour_entre_dates(18, 7, 2022, 14, 10 ,2023))
+    if (date_anterieure(jour1, mois1, annee1, 15, 10 ,1582) and date_anterieure(15, 10 ,1582, jour2, mois2, annee2)) or (date_anterieure(jour2, mois2, annee2, 15, 10 ,1582) and date_anterieure(15, 10 ,1582, jour1, mois1, annee1)):
+        return nb_jour_entre_dates - 10
+    return nb_jour_entre_dates
+
+
+
+#print(nb_jour_entre_dates(4, 10, 1580, 16, 10 ,1582))
 Ouverture_menu = True
 
 while Ouverture_menu:
