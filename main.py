@@ -115,67 +115,68 @@ def nb_jour_entre_dates(jour1, mois1, annee1, jour2, mois2 ,annee2):
 
 
 
-Ouverture_menu = True
+if __name__ == "__main__":
+    Ouverture_menu = True
 
-while Ouverture_menu:
-    choix = int(input("\necrire le chiffre correspondant a choix : \n\n1. Calcul du jour de la semaine correspondant a une date\n2. Calcul du nombre de jours separant deux dates\n3. Calcul du nombre de jours ecoules depuis votre naissance\n4. Sortie du programme\n... "))
+    while Ouverture_menu:
+        choix = int(input("\necrire le chiffre correspondant a votre choix : \n\n1. Calcul du jour de la semaine correspondant a une date\n2. Calcul du nombre de jours separant deux dates\n3. Calcul du nombre de jours ecoules depuis votre naissance\n4. Sortie du programme\n... "))
 
-    if choix == 4:
-        Ouverture_menu = False
+        if choix == 4:
+            Ouverture_menu = False
 
-    elif choix == 1:
-        date_invalide = True
-        liste_jour = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
+        elif choix == 1:
+            date_invalide = True
+            liste_jour = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
 
-        while date_invalide:
-            annee = int(input("Entre l'annee : "))
-            mois = int(input("Entre le mois : "))
-            jour = int(input("Entre le jour : "))
+            while date_invalide:
+                annee = int(input("Entre l'annee : "))
+                mois = int(input("Entre le mois : "))
+                jour = int(input("Entre le jour : "))
 
-            if date_valide(jour, mois, annee):
-                date_invalide = False
-            else:
-                print("date invalide...")
+                if date_valide(jour, mois, annee):
+                    date_invalide = False
+                else:
+                    print("date invalide...")
 
-        print('\nLe', chaine_date(jour, mois, annee), 'est un',
-               liste_jour[nb_jour_entre_dates(21, 7, 1969, jour, mois ,annee)%7], end='.')
+            print('\nLe', chaine_date(jour, mois, annee), 'est un',
+                liste_jour[nb_jour_entre_dates(21, 7, 1969, jour, mois ,annee)%7], end='.')
 
-    elif choix == 2:    
-        date_invalide = True
+        elif choix == 2:    
+            date_invalide = True
 
-        while date_invalide:
-            annee1 = int(input("Entre l'annee de ta premiere date : "))
-            mois1 = int(input("Entre le mois de ta premiere date : "))
-            jour1 = int(input("Entre le jour de ta premiere date : "))
-            annee2 = int(input("Entre l'annee de ta deuxieme date : "))
-            mois2 = int(input("Entre le mois de ta deuxieme date : "))
-            jour2 = int(input("Entre le jour de ta deuxieme date : "))
+            while date_invalide:
+                annee1 = int(input("Entre l'annee de ta premiere date : "))
+                mois1 = int(input("Entre le mois de ta premiere date : "))
+                jour1 = int(input("Entre le jour de ta premiere date : "))
+                annee2 = int(input("Entre l'annee de ta deuxieme date : "))
+                mois2 = int(input("Entre le mois de ta deuxieme date : "))
+                jour2 = int(input("Entre le jour de ta deuxieme date : "))
 
-            if date_valide(jour1, mois1, annee1) is False:
-                print("premiere date invalide...")
-            if date_valide(jour2, mois2, annee2) is False:
-                print("deuxieme date invalide...")
-            if date_valide(jour1, mois1, annee1) and date_valide(jour2, mois2, annee2):
-                date_invalide = False
+                if date_valide(jour1, mois1, annee1) is False:
+                    print("premiere date invalide...")
+                if date_valide(jour2, mois2, annee2) is False:
+                    print("deuxieme date invalide...")
+                if date_valide(jour1, mois1, annee1) and date_valide(jour2, mois2, annee2):
+                    date_invalide = False
 
-        print('\nEntre le', chaine_date(jour1, mois1, annee1), 'et le', chaine_date(jour2, mois2, annee2),
-               'il y a', nb_jour_entre_dates(jour1, mois1, annee1, jour2, mois2 ,annee2), 'jours.')
-        
-    elif choix == 3:
-        aujourd_hui = datetime.date.today()
-        date_invalide = True
-
-        while date_invalide:
-            annee = int(input("Entre ton annee de naissance : "))
-            mois = int(input("Entre ton mois de naissance : "))
-            jour = int(input("Entre ton jour de naissance : "))
-
-            if date_valide(jour, mois, annee):
-                date_invalide = False
-            else:
-                print("date invalide...")
-
-        print('\nEntre le', chaine_date(jour, mois, annee), 'et le',
-               chaine_date(aujourd_hui.day, aujourd_hui.month, aujourd_hui.year),'il y a',
-                nb_jour_entre_dates(jour, mois, annee, aujourd_hui.day, aujourd_hui.month, aujourd_hui.year), 'jours.')
+            print('\nEntre le', chaine_date(jour1, mois1, annee1), 'et le', chaine_date(jour2, mois2, annee2),
+                'il y a', nb_jour_entre_dates(jour1, mois1, annee1, jour2, mois2 ,annee2), 'jours.')
             
+        elif choix == 3:
+            aujourd_hui = datetime.date.today()
+            date_invalide = True
+
+            while date_invalide:
+                annee = int(input("Entre ton annee de naissance : "))
+                mois = int(input("Entre ton mois de naissance : "))
+                jour = int(input("Entre ton jour de naissance : "))
+
+                if date_valide(jour, mois, annee):
+                    date_invalide = False
+                else:
+                    print("date invalide...")
+
+            print('\nEntre le', chaine_date(jour, mois, annee), 'et le',
+                chaine_date(aujourd_hui.day, aujourd_hui.month, aujourd_hui.year),'il y a',
+                    nb_jour_entre_dates(jour, mois, annee, aujourd_hui.day, aujourd_hui.month, aujourd_hui.year), 'jours.')
+                
